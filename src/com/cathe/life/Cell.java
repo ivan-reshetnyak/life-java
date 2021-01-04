@@ -1,6 +1,7 @@
 package com.cathe.life;
 
 import java.util.LinkedList;
+import java.util.List;
 
 class Cell {
   enum State {
@@ -8,16 +9,18 @@ class Cell {
   }
   private static State DEFAULT_STATE = State.DEAD;
   private State state, nextState;
-  private LinkedList<Cell> neighbours;
+  private List<Cell> neighbours;
+  int neighbourCount;
 
   @FunctionalInterface
   interface Rule {
-    State update( int neighboursCount );
+    State update( Cell cell );
   }
-  private LinkedList<Rule> rules;
+  private List<Rule> rules;
 
   Cell() {
     neighbours = new LinkedList<>();
+    rules = new LinkedList<>();
     nextState = state = DEFAULT_STATE;
   }
 
@@ -51,9 +54,9 @@ class Cell {
 
   void update() {
     State newState;
-    int neighboursCount = countNeighbours();
+    neighbourCount = countNeighbours();
     for (Rule rule : rules) {
-      newState = rule.update(neighboursCount);
+      newState = rule.update(this);
       if (newState != nextState) {
         nextState = newState;
         return;
@@ -64,5 +67,14 @@ class Cell {
   Cell add( Rule newRule ) {
     rules.add(newRule);
     return this;
+  }
+
+  Cell set( List<Rule> newRules ) {
+    rules = newRules;
+    return this;
+  }
+
+  State getState() {
+    return state;
   }
 }
