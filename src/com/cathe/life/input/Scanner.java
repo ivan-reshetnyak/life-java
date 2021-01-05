@@ -1,4 +1,4 @@
-package com.cathe.life;
+package com.cathe.life.input;
 
 import org.json.simple.JSONObject;
 

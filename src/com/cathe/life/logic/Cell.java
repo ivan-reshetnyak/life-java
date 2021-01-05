@@ -1,4 +1,4 @@
-package com.cathe.life;
+package com.cathe.life.logic;
 
 import java.util.LinkedList;
 import java.util.List;

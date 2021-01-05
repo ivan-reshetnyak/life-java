@@ -1,5 +1,6 @@
-package com.cathe.life;
+package com.cathe.life.logic;
 
+import com.cathe.life.input.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -23,11 +24,11 @@ public class RectangularField extends Field {
           } };
   protected List<Cell.Rule> rules;
 
-  RectangularField() {
+  public RectangularField() {
     this(0, 0);
   }
 
-  RectangularField( int width, int height ) {
+  public RectangularField( int width, int height ) {
     this.width = width;
     this.height = height;
     rules = Arrays.asList(commonRules);
@@ -60,7 +61,7 @@ public class RectangularField extends Field {
   }
 
   @Override
-  boolean fromScanner( Scanner scanner ) {
+  public boolean fromScanner( Scanner scanner ) {
     JSONObject scanned = scanner.scan();
 
     if (!scanned.containsKey("width") ||

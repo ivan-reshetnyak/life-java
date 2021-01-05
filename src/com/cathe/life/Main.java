@@ -1,7 +1,8 @@
 package com.cathe.life;
 
+import com.cathe.life.input.FileScanner;
+import com.cathe.life.logic.RectangularField;
 import com.cathe.logging.CopyFormatter;
-import com.cathe.logging.FileLogger;
 import com.cathe.logging.Logger;
 
 import java.io.IOException;

@@ -1,15 +1,15 @@
-package com.cathe.life;
+package com.cathe.life.logic;
+
+import com.cathe.life.input.Scanner;
 
 import java.util.List;
 
 public abstract class Field {
   protected List<Cell> cells;
 
-  abstract boolean fromScanner( Scanner scanner );
+  public abstract boolean fromScanner( Scanner scanner );
 
-  private int numAlive;
-
-  void update() {
+  public void update() {
     for (Cell cell : cells)
       cell.update();
     numAlive = 0;
@@ -20,7 +20,9 @@ public abstract class Field {
     }
   }
 
-  int getNumAlive() {
+  public int getNumAlive() {
     return numAlive;
   }
+
+  private int numAlive;
 }

@@ -1,4 +1,4 @@
-package com.cathe.life;
+package com.cathe.life.input;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,17 +12,17 @@ public class FileScanner implements Scanner {
   protected FileReader fileReader;
   protected JSONParser jsonParser;
 
-  FileScanner() {
+  public FileScanner() {
     jsonParser = new JSONParser();
     fileReader = null;
   }
 
-  FileScanner( String fileName ) {
+  public FileScanner( String fileName ) {
     this();
     open(fileName);
   }
 
-  void open( String fileName ) {
+  public void open( String fileName ) {
     fileReader = null;
     try {
       fileReader = new FileReader(fileName);
