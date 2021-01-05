@@ -3,7 +3,7 @@ package com.cathe.life.logic;
 import java.util.LinkedList;
 import java.util.List;
 
-class Cell {
+public class Cell {
   enum State {
     DEAD, ALIVE
   }
@@ -34,7 +34,7 @@ class Cell {
     return this;
   }
 
-  boolean isAlive() {
+  public boolean isAlive() {
     return state == State.ALIVE;
   }
 

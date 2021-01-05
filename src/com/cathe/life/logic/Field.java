@@ -23,6 +23,9 @@ public abstract class Field {
   public int getNumAlive() {
     return numAlive;
   }
+  public List<Cell> getCells() {
+    return cells;
+  }
 
   private int numAlive;
 }

@@ -60,6 +60,14 @@ public class RectangularField extends Field {
     return cells.get(y * width + x);
   }
 
+  public int getWidth() {
+    return width;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
   @Override
   public boolean fromScanner( Scanner scanner ) {
     JSONObject scanned = scanner.scan();

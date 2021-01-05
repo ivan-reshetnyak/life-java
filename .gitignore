@@ -3,3 +3,4 @@ build/
 
 # Runtime generated
 logs/
+out/

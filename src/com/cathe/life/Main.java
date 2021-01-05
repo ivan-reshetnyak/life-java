@@ -2,6 +2,8 @@ package com.cathe.life;
 
 import com.cathe.life.input.FileScanner;
 import com.cathe.life.logic.RectangularField;
+import com.cathe.life.output.FileRenderer;
+import com.cathe.life.output.RectangularFileRenderer;
 import com.cathe.logging.CopyFormatter;
 import com.cathe.logging.Logger;
 
@@ -20,19 +22,20 @@ public class Main {
       logger.log(Level.INFO, "Program start");
 
       logger.log(Level.INFO, "Parsing console arguments...");
-      if (Args.length < 2) {
+      if (Args.length < 3) {
         logger.log(Level.INFO, "...failure!");
         logger.log(Level.SEVERE, "Wrong console argument format!");
-        logger.log(Level.INFO, "Expected: <file name> <number of turns simulated>!");
+        logger.log(Level.INFO, "Expected: <input file name> <number of turns simulated> <output file name>!");
         return;
       }
-      String fileName = Args[0];
+      String inputFileName = Args[0];
       int turnsSimulated = Integer.parseInt(Args[1]);
+      String outputFileName = Args[2];
       logger.log(Level.INFO, "...successful");
 
       RectangularField field = new RectangularField();
       logger.log(Level.INFO, "Loading field...");
-      if (field.fromScanner(new FileScanner(fileName)))
+      if (field.fromScanner(new FileScanner(inputFileName)))
         logger.log(Level.INFO, "...successful");
       else {
         logger.log(Level.INFO, "...failure!");
@@ -40,10 +43,17 @@ public class Main {
         return;
       }
 
-      for (int i = 0; i < turnsSimulated; ++i) {
+      logger.log(Level.INFO, "Opening output stream...");
+      RectangularFileRenderer renderer = new RectangularFileRenderer(field.getWidth(), field.getHeight(),
+              outputFileName);
+      logger.log(Level.INFO, "...successful");
+      logger.log(Level.INFO, "Running simulation...");
+      for (int i = 0; i <= turnsSimulated; ++i) {
+        logger.log(Level.FINEST, "Turn: " + i + "; Alive: " + field.getNumAlive());
+        renderer.render(field);
         field.update();
-        logger.log(Level.FINEST, "Turn: " + (i + 1) + "; Alive: " + field.getNumAlive());
       }
+      logger.log(Level.INFO, "...successful");
 
       logger.log(Level.INFO, "Program end");
     } catch (IOException ignored) {
