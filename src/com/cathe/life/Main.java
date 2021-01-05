@@ -12,7 +12,9 @@ public class Main {
               "logs/main.log");
       logger.log(Level.INFO, "Program start");
 
-      RectangularField field = new RectangularField(5, 5);
+      // RectangularField field = new RectangularField(5, 5);
+      RectangularField field = new RectangularField();
+      field.fromScanner(new FileScanner("in/beacon.json"));
       for (int i = 0; i < 30; ++i) {
         field.update();
         logger.log(Level.INFO, "Turn: " + (i + 1) + "; Alive: " + field.getNumAlive());

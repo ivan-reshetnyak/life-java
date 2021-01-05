@@ -5,6 +5,8 @@ import java.util.List;
 public abstract class Field {
   protected List<Cell> cells;
 
+  abstract boolean fromScanner( Scanner scanner );
+
   private int numAlive;
 
   void update() {

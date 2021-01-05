@@ -1,6 +1,7 @@
 package com.cathe.life;
 
-import javafx.util.Pair;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,19 +9,18 @@ import java.util.ArrayList;
 
 public class RectangularField extends Field {
   protected int width, height;
-  private static final int[][] deltas = { {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, -1} };
+  private static final int[][] deltas = { {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1} };
   private static final Cell.Rule[] commonRules = {
           ( Cell cell ) -> {
-            if (cell.isAlive() && (cell.neighbourCount == 2 || cell.neighbourCount == 3))
-              return Cell.State.ALIVE;
+            if (cell.isAlive() && (cell.neighbourCount < 2 || cell.neighbourCount > 3))
+              return Cell.State.DEAD;
             return cell.getState();
           },
           ( Cell cell ) -> {
             if (!cell.isAlive() && cell.neighbourCount == 3)
               return Cell.State.ALIVE;
             return cell.getState();
-          },
-          ( Cell cell ) -> Cell.State.DEAD };
+          } };
   protected List<Cell.Rule> rules;
 
   RectangularField() {
@@ -36,6 +36,10 @@ public class RectangularField extends Field {
     cells = new ArrayList<>(size);
     for (int i = 0; i < size; ++i)
       cells.add(new Cell());
+    link();
+  }
+
+  void link() {
     for (int y = 0; y < height; ++y)
       for (int x = 0; x < width; ++x) {
         Cell curCell = get(x, y);
@@ -53,5 +57,23 @@ public class RectangularField extends Field {
       y += height;
     y %= height;
     return cells.get(y * width + x);
+  }
+
+  @Override
+  boolean fromScanner( Scanner scanner ) {
+    JSONObject scanned = scanner.scan();
+
+    if (!scanned.containsKey("width") ||
+            !scanned.containsKey("height") ||
+            !scanned.containsKey("cells"))
+      return false;
+
+    width = Math.toIntExact((long) scanned.get("width"));
+    height = Math.toIntExact((long) scanned.get("height"));
+    cells = new ArrayList<>(width * height);
+    JSONArray cellArray = (JSONArray) scanned.get("cells");
+    cellArray.forEach(cell -> cells.add(new Cell((long) cell == 0 ? Cell.State.DEAD : Cell.State.ALIVE)));
+    link();
+    return true;
   }
 }
