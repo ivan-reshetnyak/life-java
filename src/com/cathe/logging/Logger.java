@@ -1,10 +1,9 @@
 package com.cathe.logging;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class BaseLogger {
-  protected Logger logger;
+  protected java.util.logging.Logger logger;
 
   protected BaseLogger( String name ) {
     logger = Logger.getLogger(name);
