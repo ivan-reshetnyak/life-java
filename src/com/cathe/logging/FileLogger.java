@@ -2,8 +2,9 @@ package com.cathe.logging;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.SimpleFormatter;
 
 public class FileLogger extends BaseLogger {
   public FileLogger( String name, String fileName ) throws IOException {
@@ -18,7 +19,7 @@ public class FileLogger extends BaseLogger {
 
   public void open( String fileName ) throws IOException {
     FileHandler fileHandler = new FileHandler(fileName);
-    fileHandler.setFormatter(new SimpleFormatter());
+    fileHandler.setFormatter(new CopyFormatter());
     logger.addHandler(fileHandler);
   }
 }
